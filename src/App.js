@@ -1,25 +1,43 @@
-import logo from './logo.svg';
+import React, { Component } from 'react';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class Square extends Component {
+  render () {
+    return (
+      <div className='ttt_parameter'>X</div>
+    )
+  }
 }
 
-export default App;
+class Board extends Component {
+  render() {
+    return (
+      <div className='ttt_board'>
+        <Square key = '0' />
+        <Square key = '1' />
+        <Square key = '2' />
+        <Square key = '3' />
+        <Square key = '4' />
+        <Square key = '5' />
+        <Square key = '6' />
+        <Square key = '7' />
+        <Square key = '8' />
+        </div>
+
+    )
+  }
+}
+
+class Game extends Component {
+  render() {
+    return (
+      <div className='game'>
+        <h1 className='game_title'>TTT Game</h1>
+        <Board />
+      </div>
+    )
+  }
+}
+
+export default Game
+
