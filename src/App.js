@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import './App.css'
 // import '.AI'
-import computerMove from './AI'
+// import computerMove from './AI'
 
 
 
@@ -18,6 +18,7 @@ class Board extends Component {
   
   renderSquare = (i) => {
     return (
+
       <Square 
       className={'square #' + i}
       value={this.props.currentSquares[i]}
@@ -79,10 +80,12 @@ class Game extends Component {
   }
   
   componentDidUpdate() {
-    const isOnePlayer = this.props.isOnePlayer
+
+    const numberOfPlayers = this.props.numberOfPlayers
     const squares = this.state.currentSquares
 
-    if (isOnePlayer === 'true' && !this.state.xsTurn && squares.includes(null)) {
+    if (numberOfPlayers === 1 && !this.state.xsTurn && squares.includes(null)) {
+
       let movePossible = false
 
       while (!movePossible) {
@@ -101,22 +104,15 @@ class Game extends Component {
   render () {
 
     const squares = this.state.currentSquares
-
     let newGameButton
-
     let status 
-
-    // if oneplayer && !this.state.xsturn {
-      // const event - new mouse event click
-
-    // }
 
     if (checkWinner(squares)) {
       status = checkWinner(squares) + ' Wins!'
-      newGameButton = <button className='new-game' onClick={this.restart}>New Game?</button>
+     
     } else if (!checkWinner(squares) && !squares.includes(null)) {
       status = 'Tie'
-      newGameButton = <button className='new-game' onClick={this.restart}>New Game?</button>
+     
     } else {
       status = this.state.xsTurn ? 'Current Player: X' : 'Current Player: O'
     }
@@ -127,37 +123,94 @@ class Game extends Component {
         <h2 className='game-status'>{status}</h2>
         <Board onClick={this.handleClick} currentSquares={squares}/>
 
-        {newGameButton}
+        <div className='button-container'>
+          <button className='new-game' onClick={this.restart}>Restart Game</button>
+          <button className='menu-button' onClick={this.props.returnFunction}>Menu</button>
+       </div>
       </div>
     )
   }
 }
 
-  function checkWinner (check)  {
-    const lines = [
-      [0, 1, 2],
-      [3, 4, 5],
-      [6, 7, 8],
-      [0, 3, 6],
-      [1, 4, 7],
-      [2, 5, 8],
-      [0, 4, 8],
-      [2, 4, 6]
-    ]
-  
-    for (let i = 0, length = lines.length; i < length; i++) {
-      const [a, b, c] = lines[i]
-      if (check[a] && check[a] === check[b] && check[a] === check[c]) {
-        return check[a]
-      }
+class StartMenu extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      gameStarted: false,
+      numberOfPlayers: null
     }
-    return null
   }
 
-  function random () {
-    return Math.floor(Math.random() * (8 - 0 + 1)) + 0
+  startOnePlayerGame = () => {
+    this.setState({
+      gameStarted: true,
+      numberOfPlayers: 1
+    })
+  }
+  startTwoPlayerGame = () => {
+    this.setState({
+      gameStarted: true,
+      numberOfPlayers: 2
+    })
+  }
+  returnToMenu = () => {
+    this.setState({
+      gameStarted: false,
+      numberOfPlayers:null
+    })
   }
 
+  render () {
+    return (
+    <div> 
+      {!this.state.gameStarted &&
+        <div>
+          <p className='title'>One Player or Two?</p>
+          <button className='button' onClick={this.startOnePlayerGame}>One</button>
+          <button className='button' onClick={this.startTwoPlayerGame}>Two</button> 
+        </div>
+      }
+      {this.state.gameStarted &&
+        <div>
+          <Game numberOfPlayers={this.state.numberOfPlayers} returnFunction={this.returnToMenu}/>
+        </div>
+      }
+    </div>
+  )
+  }
+}
 
+class App extends Component {
+  render () {
+    return (
+      <StartMenu />
+    )
+  }
+}
 
-export default Game
+function checkWinner (check)  {
+  const lines = [
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6]
+  ]
+
+  for (let i = 0, length = lines.length; i < length; i++) {
+    const [a, b, c] = lines[i]
+    if (check[a] && check[a] === check[b] && check[a] === check[c]) {
+      return check[a]
+    }
+  }
+  return null
+}
+
+function random () {
+  return Math.floor(Math.random() * (8 - 0 + 1)) + 0
+}
+
+export default App
