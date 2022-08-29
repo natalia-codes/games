@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import './App.css'
+// import '.AI'
+import computerMove from './AI'
 
 
 
@@ -17,6 +19,7 @@ class Board extends Component {
   renderSquare = (i) => {
     return (
       <Square 
+      className={'square #' + i}
       value={this.props.currentSquares[i]}
       onClick={() => {this.props.onClick(i)}}/>
     )
@@ -75,6 +78,26 @@ class Game extends Component {
     })
   }
   
+  componentDidUpdate() {
+    const isOnePlayer = this.props.isOnePlayer
+    const squares = this.state.currentSquares
+
+    if (isOnePlayer === 'true' && !this.state.xsTurn && squares.includes(null)) {
+      let movePossible = false
+
+      while (!movePossible) {
+        let num = random()
+
+        if (squares[num] === null) {
+          this.handleClick(num)
+          movePossible = true
+        }
+      }
+      // console.log(computerMove(squares))
+      // this.handleClick(computerMove(squares))
+    }
+  }
+
   render () {
 
     const squares = this.state.currentSquares
@@ -82,6 +105,11 @@ class Game extends Component {
     let newGameButton
 
     let status 
+
+    // if oneplayer && !this.state.xsturn {
+      // const event - new mouse event click
+
+    // }
 
     if (checkWinner(squares)) {
       status = checkWinner(squares) + ' Wins!'
@@ -124,6 +152,10 @@ class Game extends Component {
       }
     }
     return null
+  }
+
+  function random () {
+    return Math.floor(Math.random() * (8 - 0 + 1)) + 0
   }
 
 
