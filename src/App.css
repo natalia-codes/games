@@ -7,30 +7,17 @@
 .ttt_board {
   display: flex;
   flex-wrap: wrap;
-  height: 200px;
-  width: 200px;
+  height: 190px;
+  width: 190px;
   border: 1px solid pink;
 }
 
 .ttt_parameter {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 58px;
-  width: 58px;
-  font-size: 60px;
-  border: 1px solid pink;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+  vertical-align: top;
+  margin: 0;
+  padding: 0;
+  height: 60px;
+  width: 60px;
+  font-size: 40px; 
+  border: 1px solid black; 
 }
