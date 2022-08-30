@@ -81,6 +81,9 @@ class Game extends Component {
   
   componentDidUpdate() {
 
+    const currentPlayer = this.state.xsTurn ? 'X' : 'O'
+    console.log(minimax(this.state.currentSquares, currentPlayer, 'X', 'O'))
+
     const numberOfPlayers = this.props.numberOfPlayers
     const squares = this.state.currentSquares
 
@@ -191,7 +194,7 @@ class StartMenu extends Component {
     return (
     <div> 
       {!this.state.gameStarted && !this.state.chooseSide &&
-        <Options 
+        <OptionButtons 
           title='One Player Or Two?' 
           optionOne='One'
           handleClickOne={this.chooseSideMenu}
@@ -201,7 +204,7 @@ class StartMenu extends Component {
       }
       {
         this.state.chooseSide && !this.state.gameStarted && 
-        <Options 
+        <OptionButtons
           title='X or O?' 
           optionOne='X'
           handleClickOne={this.chooseSideX}
@@ -222,7 +225,7 @@ class StartMenu extends Component {
   )
   }
 }
-class Options extends Component {
+class OptionButtons extends Component {
   render () {
     return (
       <div>
@@ -230,9 +233,7 @@ class Options extends Component {
         <button 
           className='button' 
           onClick={this.props.handleClickOne}
-        >
-          {this.props.optionOne}
-        </button>
+        >{this.props.optionOne}</button>
         <button 
           className='button' 
           onClick={this.props.handleClickTwo}
@@ -247,7 +248,10 @@ class Options extends Component {
 class App extends Component {
   render () {
     return (
-      <StartMenu />
+      <div>
+        <h1>title</h1>
+        <StartMenu />
+      </div>
     )
   }
 }
@@ -275,6 +279,70 @@ function checkWinner (check)  {
 
 function random () {
   return Math.floor(Math.random() * (8 - 0 + 1)) + 0
+}
+function emptySpaces (board) {
+  const result = []
+
+  for (let i = 0; i < board.length; i++) {
+    if (board[i] !== 'X' && board[i] !== 'O'){
+      result.push(i)
+    }
+  }
+  return result
+}
+
+function minimax (newBoard, current, human, computer) {
+  // debugger
+  const availableSpaces = emptySpaces(newBoard)
+  const moves = []
+  let bestMove
+
+  if (checkWinner(newBoard) === human) {
+    return {score: -10}
+  } else if (checkWinner(newBoard) === computer) {
+    return {score: 10}
+  } else if (availableSpaces.length === 0) {
+    return {score: 0}
+  }
+
+  for (let i = 0; i < availableSpaces.length; i++) {
+    let move = {}
+    move.index = newBoard[availableSpaces[i]]
+
+    newBoard[availableSpaces[i]] = current
+
+    if (current === computer) {
+      const result = minimax(newBoard, human)
+      move.score = result.score
+    } else {
+      const result = minimax(newBoard, computer)
+      move.score = result.score
+    }
+
+    newBoard[availableSpaces[i]] = null
+
+    moves.push(move)
+  }
+
+  if (current === computer) {
+    let bestScore = -10000
+
+    for (let i = 0; i < moves.length; i++) {
+      if (moves[i].score > bestScore) {
+        bestScore = moves[i].score
+        bestMove = i
+      }
+    }
+  } else {
+    let bestScore = 10000
+    for (let i = 0; i < moves.length; i++) {
+      if (moves[i].score < bestScore) {
+        bestScore = moves[i].score
+        bestMove = i
+      }
+    }
+  }
+  return moves[bestMove]
 }
 
 export default App
