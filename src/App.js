@@ -82,13 +82,14 @@ class Game extends Component {
   restart = () => {
     this.setState({
       currentSquares: [0, 1, 2, 3, 4, 5, 6, 7, 8],
+      humanPlayer: this.state.humanPlayer,
       xsTurn: true
     })
   }
   
   computerMove = () => {
     let result
-    if (this.state.humanPlayer !== null) {
+    if (this.state.humanPlayer === 'X' || this.state.humanPlayer === 'O') {
       const humanPlayer = this.state.humanPlayer
       const computerPlayer = humanPlayer === 'X' ? 'O' : 'X'
       const currentPlayer = this.state.xsTurn ? 'X' : 'O'
@@ -127,7 +128,7 @@ class Game extends Component {
 
     return (
       <div className='ttt_game'>
-        <h1 className='game-title'>TTT Game</h1>
+
         <h2 className='game-status'>{status}</h2>
         <Board 
           onClick={this.handleClick} 
@@ -191,13 +192,17 @@ class StartMenu extends Component {
   returnToMenu = () => {
     this.setState({
       gameStarted: false,
-      numberOfPlayers:null
+      numberOfPlayers:null,
+      chooseSide: false, 
+      humanPlayer: null
+
     })
   }
 
   render () {
     return (
     <div> 
+      <h1 className='game-title'>TTT Game</h1>
       {!this.state.gameStarted && !this.state.chooseSide &&
         <OptionButtons 
           title='One Player Or Two?' 
@@ -207,8 +212,7 @@ class StartMenu extends Component {
           handleClickTwo={this.startTwoPlayerGame}
         />
       }
-      {
-        this.state.chooseSide && !this.state.gameStarted && 
+        {this.state.chooseSide && !this.state.gameStarted && 
         <OptionButtons
           title='X or O?' 
           optionOne='X'
