@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import './App.css'
-
-
+import Navbar from './Navbar'
 
 
 function Square(props) {
@@ -17,7 +16,7 @@ class Board extends Component {
   
   renderSquare = (i) => {
     let squareValue
-    if(this.props.currentSquares[i] != 'X' && this.props.currentSquares[i] != 'O'){
+    if(this.props.currentSquares[i] !== 'X' && this.props.currentSquares[i] !== 'O'){
       squareValue = ''
 
     } else {
@@ -258,6 +257,7 @@ class App extends Component {
   render () {
     return (
       <div>
+        <Navbar />
 
         <StartMenu />
       </div>
