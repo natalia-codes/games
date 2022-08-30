@@ -204,7 +204,7 @@ class StartMenu extends Component {
       <h1 className='game-title'>TTT Game</h1>
       {!this.state.gameStarted && !this.state.chooseSide &&
         <OptionButtons 
-          title='One Player Or Two?' 
+          // title='One Player Or Two?' 
           optionOne='One'
           handleClickOne={this.chooseSideMenu}
           optionTwo='two'
@@ -237,7 +237,11 @@ class OptionButtons extends Component {
   render () {
     return (
       <div>
-        <p>{this.props.title}</p>
+        <div class="wrapper">
+    <div class="typing-effect">
+      Make a selection:
+    </div>
+</div>
         <button 
           className='button' 
           onClick={this.props.handleClickOne}
