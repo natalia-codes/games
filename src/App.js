@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import './App.css'
-// import '.AI'
-// import computerMove from './AI'
+
 
 
 
@@ -17,11 +16,18 @@ function Square(props) {
 class Board extends Component {
   
   renderSquare = (i) => {
+    let squareValue
+    if(this.props.currentSquares[i] != 'X' && this.props.currentSquares[i] != 'O'){
+      squareValue = ''
+
+    } else {
+      squareValue = this.props.currentSquares[i]
+    }
     return (
 
       <Square 
       className={'square #' + i}
-      value={this.props.currentSquares[i]}
+      value={squareValue}
       onClick={() => {this.props.onClick(i)}}/>
     )
   }
@@ -52,7 +58,8 @@ class Game extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      currentSquares: Array(9).fill(null),
+      currentSquares: [0, 1, 2, 3, 4, 5, 6, 7, 8],
+      humanPlayer: this.props.humanPlayer,
       xsTurn: true
     }
   }
@@ -60,7 +67,7 @@ class Game extends Component {
     handleClick = (i) => {
       const newSquares = this.state.currentSquares.slice()
 
-      if (newSquares[i] !== null || checkWinner(newSquares)) {
+      if (newSquares[i] === 'X' || newSquares[i] === 'O' || checkWinner(newSquares)) {
       return
     }
 
@@ -74,34 +81,32 @@ class Game extends Component {
   
   restart = () => {
     this.setState({
-      currentSquares: Array(9).fill(null),
+      currentSquares: [0, 1, 2, 3, 4, 5, 6, 7, 8],
       xsTurn: true
     })
   }
   
-  componentDidUpdate() {
-
-    const currentPlayer = this.state.xsTurn ? 'X' : 'O'
-    console.log(minimax(this.state.currentSquares, currentPlayer, 'X', 'O'))
-
-    const numberOfPlayers = this.props.numberOfPlayers
-    const squares = this.state.currentSquares
-
-    if (numberOfPlayers === 1 && !this.state.xsTurn && squares.includes(null)) {
-
-      let movePossible = false
-
-      while (!movePossible) {
-        let num = random()
-
-        if (squares[num] === null) {
-          this.handleClick(num)
-          movePossible = true
-        }
+  computerMove = () => {
+    let result
+    if (this.state.humanPlayer !== null) {
+      const humanPlayer = this.state.humanPlayer
+      const computerPlayer = humanPlayer === 'X' ? 'O' : 'X'
+      const currentPlayer = this.state.xsTurn ? 'X' : 'O'
+      if (humanPlayer === 'X' && currentPlayer === 'O') {
+        result = minimax(this.state.currentSquares, 'O', humanPlayer, computerPlayer)
+        this.handleClick(result.index)
+      } else if (humanPlayer === 'O' && currentPlayer === 'X') {
+        result = minimax(this.state.currentSquares, 'X', humanPlayer, computerPlayer)
+        this.handleClick(result.index)
       }
-      // console.log(computerMove(squares))
-      // this.handleClick(computerMove(squares))
     }
+  }
+  componentDidUpdate() {
+    this.computerMove()
+  }
+
+  componentDidMount() {
+    this.computerMove()
   }
 
   render () {
@@ -113,7 +118,7 @@ class Game extends Component {
     if (checkWinner(squares)) {
       status = checkWinner(squares) + ' Wins!'
      
-    } else if (!checkWinner(squares) && !squares.includes(null)) {
+    } else if (!checkWinner(squares) && emptySpaces(squares).length === 0) {
       status = 'Tie'
      
     } else {
@@ -249,7 +254,7 @@ class App extends Component {
   render () {
     return (
       <div>
-        <h1>title</h1>
+
         <StartMenu />
       </div>
     )
@@ -277,9 +282,7 @@ function checkWinner (check)  {
   return null
 }
 
-function random () {
-  return Math.floor(Math.random() * (8 - 0 + 1)) + 0
-}
+
 function emptySpaces (board) {
   const result = []
 
@@ -291,40 +294,43 @@ function emptySpaces (board) {
   return result
 }
 
-function minimax (newBoard, current, human, computer) {
-  // debugger
+function minimax (board, current, human, computer) {
+  const newBoard = board.slice()
   const availableSpaces = emptySpaces(newBoard)
   const moves = []
-  let bestMove
+
 
   if (checkWinner(newBoard) === human) {
-    return {score: -10}
+    return { score: -10 };
   } else if (checkWinner(newBoard) === computer) {
-    return {score: 10}
-  } else if (availableSpaces.length === 0) {
-    return {score: 0}
+    return { score: 10 };
+  } else if (availableSpaces.length === 0){
+    return { score: 0 };
   }
 
   for (let i = 0; i < availableSpaces.length; i++) {
-    let move = {}
+    const move = {}
     move.index = newBoard[availableSpaces[i]]
 
     newBoard[availableSpaces[i]] = current
 
     if (current === computer) {
-      const result = minimax(newBoard, human)
+      const result = minimax(newBoard, human, human, computer)
       move.score = result.score
     } else {
-      const result = minimax(newBoard, computer)
+      const result = minimax(newBoard, computer, human, computer)
       move.score = result.score
     }
 
-    newBoard[availableSpaces[i]] = null
+    newBoard[availableSpaces[i]] = move.index
 
     moves.push(move)
   }
 
+  let bestMove
+
   if (current === computer) {
+
     let bestScore = -10000
 
     for (let i = 0; i < moves.length; i++) {
