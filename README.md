@@ -1,7 +1,5 @@
 # Creating an Unbeatable AI: Minimax algorithm (Tic Tac Toe)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
 ## Funtionality
 
 In this tic-tac-toe game, you can :
@@ -13,28 +11,59 @@ In this tic-tac-toe game, you can :
 
 - Visual Studio Code 
 - React with [Create React App](https://github.com/facebook/create-react-app).
+- Cpanel file manager
 
 ## Preperation: 
 
 1. Defining boundaries/specs
+- Two players: human player + human player
+- Option for 1 human players + 1 computer player
+- Algorithm must follow space complexity of: O(bm) and time complexity of: O(b^m)
+
 2. Defining key features
+- Game must be in 3x3 grid (square, board, game)
+- Click on grid should input a value of X or O 
+- Game must take turns between 2 values: X and O
+- Computer should randomly select a spot on the 3x3 grid when playing in one-player mode
+
 3. Finding sub features 
+- Define a Winner, Loser, and a Tie game 
+- Implement AI; minimax algorithm: computer should always make the most optimal move (game should always end in a tie)
+- Create a navbar to allow users to link to code written 
+- Link to resources used 
+
 4. Establishing a time-line for feature functionality 
+- priorities were as follows: become familiar with minimax algorithm
+- get 3x3 grid with click values 
+- create computer to randomly generate a value on grid 
+- create winner/loser/tie game outcome
+- implement minimax algorithm for optimal game with AI 
 
-## The project:
+## My Experience:
 
-I had a lot of fun creating this game! React allowed me to focus most of my time on the minimax algorithm as I didn't have to worry to much about spending too much time putting the asthetics together since React makes it a relative breeze compared to assembling/testing the logic and functionality of the algorithm. 
+I had a lot of fun creating this game! I chose to use React because it allowed me to focus most of my time on the minimax algorithm as I didn't have to worry too much about spending too much time putting the aesthetics together since React makes it a relative breeze which allowed me to test and assemble the logic and functionality of the algorithm. In the future, I would like to implement alpha-beta pruning to the minimax algorithm which should optimize its speed. The game is relatively quick, however I recognize that with a larger game that has more possibility for moves, there would be a need for a more optimal algorithm. Ultimately, being able to create this game and learn more about it's implementation was very exciting for me :) 
 
 ## Resources Used: 
 
-- will provide links in a bit 
+- https://www.whitman.edu/documents/Academics/Mathematics/2019/Felstiner-Guichard.pdf
+- https://people.cs.pitt.edu/~litman/courses/cs2710/lectures/pruningReview.pdf
+- https://cis.temple.edu/~vasilis/Courses/CIS603/Lectures/l7.html#:~:text=The%20time%20complexity%20of%20minimax,the%20leaves%20of%20the%20tree
+- https://www.neverstopbuilding.com/blog/minimax
 
 ## Challenges:
-- more on this in a bit 
+
+- Understanding minimax and alpha-beta pruning
+- Turning pseudocode of the minimax algorithm into functional code (lots of trial and error)
+- Balancing functionality with aesthetics
+- Deciding when functionality was enough and when to move onto some of the aesthetics
 
 ## Screenshots: 
 
-- screenshots soon
+![Alt text](https://www.cloudformdata.com/img/tttgithub.gif "gif of working app")
+
+### play tic tac toe here: www.cloudformdata.com 
+
+## or:
 
 ### `npm start`
 
@@ -44,57 +73,3 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 The page will reload when you make changes.\
 You may also see any lint errors in the console.
 
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
