@@ -1,10 +1,36 @@
-# Getting Started with Create React App
+# Creating an Unbeatable AI: Minimax algorithm (Tic Tac Toe)
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+## Funtionality
 
-In the project directory, you can run:
+In this tic-tac-toe game, you can :
+- Play against an unbeatable computer (the best you can do is tie)
+- Play multi-player mode with two players 
+- Choose if you want to play as X or O
+
+## Tools Used
+
+- Visual Studio Code 
+- React with [Create React App](https://github.com/facebook/create-react-app).
+
+## Preperation: 
+
+1. Defining boundaries/specs
+2. Defining key features
+3. Finding sub features 
+4. Establishing a time-line for feature functionality 
+
+## The project:
+
+I had a lot of fun creating this game! React allowed me to focus most of my time on the minimax algorithm as I didn't have to worry to much about spending too much time putting the asthetics together since React makes it a relative breeze compared to assembling/testing the logic and functionality of the algorithm. 
+
+## Resources Used: 
+
+- will provide links in a bit 
+
+## Challenges:
+
 
 ### `npm start`
 
