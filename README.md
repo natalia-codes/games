@@ -30,7 +30,11 @@ I had a lot of fun creating this game! React allowed me to focus most of my time
 - will provide links in a bit 
 
 ## Challenges:
+- more on this in a bit 
 
+## Screenshots: 
+
+- screenshots soon
 
 ### `npm start`
 
